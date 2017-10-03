@@ -1,6 +1,8 @@
-kinesis-agent-go
-====
+# kinesis-agent-go
+
 Amazon Kinesis Streams agent written in Go.
+
+[![CircleCI](https://circleci.com/gh/itkq/kinesis-agent-go.svg?style=svg)](https://circleci.com/gh/itkq/kinesis-agent-go)
 
 ## Description
 Collect logs based on `tail -F` and send it to Amazon Kinesis Streams.
@@ -9,9 +11,9 @@ Collect logs based on `tail -F` and send it to Amazon Kinesis Streams.
 
 ### Tailing
 Monitor filesystem event using [fsnotify](https://github.com/fsnotify/fsnotify) and
-implement tailing like 
+implement tailing like
 `tail -F` rather than `tail -f`.
-Read position of each log is managed by a local file. 
+Read position of each log is managed by a local file.
 
 ### Aggregation
 To reduce cost, log entries are aggregated (line-based) as one record, [up to 25 KB](https://aws.amazon.com/kinesis/streams/pricing/).
