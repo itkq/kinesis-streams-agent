@@ -57,7 +57,7 @@ $ go get github.com/itkq/kinesis-agent-go
 
 ## Licence
 
-TBD
+MIT
 
 ## Author
 
