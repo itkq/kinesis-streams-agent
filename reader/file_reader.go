@@ -254,3 +254,15 @@ func (r *FileReader) Close() {
 	r.io.Close()
 	r.io = nil
 }
+
+func (r *FileReader) Export() interface{} {
+	return &FileReaderMetrics{
+		Pos:  r.pos,
+		Path: r.path,
+	}
+}
+
+type FileReaderMetrics struct {
+	Pos  int64  `json:"pos"`
+	Path string `json:"path"`
+}

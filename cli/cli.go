@@ -111,7 +111,9 @@ func StartCLI() int {
 	}
 
 	// for monitoring
+	api.Register(state)
 	api.Register(aggregator)
+	api.Register(watcher)
 	api.Register(sender)
 
 	controlCh := make(chan interface{})

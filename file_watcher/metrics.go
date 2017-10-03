@@ -1,30 +1,24 @@
 package filewatcher
 
-// func (w *FileWatcher) Export() api.Metrics {
-// 	watchingDirs := make([]string, 0, len(w.fswatcher.watchingDir))
-// 	for dir := range w.fswatcher.watchingDir {
-// 		watchingDirs = append(watchingDirs, dir)
-// 	}
-// 	watchingFiles := make([]string, 0, len(w.fswatcher.watchingFile))
-// 	for file := range w.fswatcher.watchingFile {
-// 		watchingFiles = append(watchingFiles, file)
-// 	}
+import (
+	"github.com/itkq/kinesis-agent-go/reader"
+)
 
-// 	return &metrics{
-// 		WatchingDirs:  watchingDirs,
-// 		WatchingFiles: watchingFiles,
-// 	}
-// }
+func (w *FileWatcher) Endpoint() string {
+	return "/file_watcher"
+}
 
-// func (w *FileWatcher) Endpoint() string {
-// 	return "/file_watcher"
-// }
+func (w *FileWatcher) Export() interface{} {
+	readers := make(map[uint64]interface{})
+	for i, r := range w.readers {
+		readers[i] = r.(*reader.FileReader).Export()
+	}
 
-// type metrics struct {
-// 	WatchingDirs  []string `json:"watching_directories"`
-// 	WatchingFiles []string `json:"watching_files"`
-// }
+	return &FileWatcherMetrics{
+		Readers: readers,
+	}
+}
 
-// func (m *metrics) ToJSON() ([]byte, error) {
-// 	return json.Marshal(m)
-// }
+type FileWatcherMetrics struct {
+	Readers map[uint64]interface{} `json:"readers"`
+}

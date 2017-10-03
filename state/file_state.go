@@ -263,3 +263,18 @@ type FileReadRange struct {
 func (r *FileReadRange) Len() int64 {
 	return r.End - r.Begin
 }
+
+// for monitoring
+func (s *FileState) Endpoint() string {
+	return "/state"
+}
+
+func (s *FileState) Export() interface{} {
+	return &StateMetrics{
+		ReaderStates: s.readerStates,
+	}
+}
+
+type StateMetrics struct {
+	ReaderStates map[uint64]*ReaderState `json:"reader_states"`
+}
