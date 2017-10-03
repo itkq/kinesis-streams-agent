@@ -91,8 +91,8 @@ func TestAddChunk(t *testing.T) {
 
 	for _, c := range testAddChunkCases {
 		p := buf.AddChunk(c.input)
-		assert.Equal(t, c.expectedSize, buf.payload.Size, fmt.Sprintf("%s: size", c.desc))
-		assert.Equal(t, c.expectedCount, buf.payload.Count, fmt.Sprintf("%s: count", c.desc))
+		assert.Equal(t, c.expectedSize, buf.Payload.Size, fmt.Sprintf("%s: size", c.desc))
+		assert.Equal(t, c.expectedCount, buf.Payload.Count, fmt.Sprintf("%s: count", c.desc))
 		assert.Equal(t, c.expectedPayload, p, fmt.Sprintf("%s: payload", c.desc))
 	}
 }

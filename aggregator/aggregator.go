@@ -6,8 +6,11 @@ import (
 
 	"github.com/itkq/kinesis-agent-go/aggregator/payload_buffer"
 	"github.com/itkq/kinesis-agent-go/chunk"
-	"github.com/itkq/kinesis-agent-go/config"
 	"github.com/itkq/kinesis-agent-go/payload"
+)
+
+const (
+	DefaultFlushInterval = 60 * time.Second
 )
 
 type Aggregator struct {
@@ -16,27 +19,30 @@ type Aggregator struct {
 	// output channel
 	PayloadCh chan *payload.Payload
 
-	buffer      *payloadbuffer.PayloadBuffer
-	flushTicker *time.Ticker
+	FlushInterval time.Duration
+
+	buffer *payloadbuffer.PayloadBuffer
 }
 
-func NewAggregator(c *config.AggregatorConfig) *Aggregator {
+func NewAggregator() *Aggregator {
 	return &Aggregator{
-		buffer:      payloadbuffer.NewPayloadBuffer(),
-		ChunkCh:     make(chan *chunk.Chunk),
-		PayloadCh:   make(chan *payload.Payload),
-		flushTicker: time.NewTicker(c.FlushInverval),
+		buffer:        payloadbuffer.NewPayloadBuffer(),
+		ChunkCh:       make(chan *chunk.Chunk),
+		PayloadCh:     make(chan *payload.Payload),
+		FlushInterval: DefaultFlushInterval,
 	}
 }
 
 func (a *Aggregator) Run() {
+	flushTicker := time.NewTicker(a.FlushInterval)
+
 	for {
 		select {
 		case chunk := <-a.ChunkCh:
 			p := a.Aggregate(chunk)
 			a.Output(p)
 
-		case <-a.flushTicker.C:
+		case <-flushTicker.C:
 			log.Println("aggregator> interval flush")
 			a.Flush()
 		}

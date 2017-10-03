@@ -66,7 +66,10 @@ func StartCLI() int {
 		return 1
 	}
 
-	aggregator := aggregator.NewAggregator(conf.AggregatorConfig)
+	aggregator := aggregator.NewAggregator()
+	if conf.AggregatorConfig.FlushInverval != 0 {
+		aggregator.FlushInterval = conf.AggregatorConfig.FlushInverval
+	}
 
 	watcher, err := filewatcher.NewFileWatcher(
 		conf.FileWatcherConfig,
@@ -107,6 +110,8 @@ func StartCLI() int {
 		return 1
 	}
 
+	// for monitoring
+	api.Register(aggregator)
 	api.Register(sender)
 
 	controlCh := make(chan interface{})

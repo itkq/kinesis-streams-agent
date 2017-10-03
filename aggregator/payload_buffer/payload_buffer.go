@@ -13,7 +13,7 @@ const (
 )
 
 type PayloadBuffer struct {
-	payload              *payload.Payload
+	Payload              *payload.Payload
 	RecordUnitSize       int64
 	RecordsPerPayloadMax int64
 	PayloadSizeMax       int64
@@ -21,7 +21,7 @@ type PayloadBuffer struct {
 
 func NewPayloadBuffer() *PayloadBuffer {
 	return &PayloadBuffer{
-		payload:              payload.NewPayload(),
+		Payload:              payload.NewPayload(),
 		RecordUnitSize:       DefaultRecordUnitSize,
 		RecordsPerPayloadMax: DefaultRecordsPerPayload,
 		PayloadSizeMax:       DefaultPayloadSize,
@@ -29,16 +29,16 @@ func NewPayloadBuffer() *PayloadBuffer {
 }
 
 func (b *PayloadBuffer) AddChunk(chunk *chunk.Chunk) *payload.Payload {
-	lastRecord := b.payload.LastRecord()
+	lastRecord := b.Payload.LastRecord()
 	size := chunk.SendInfo.ReadRange.Len()
 
 	// next payload (size over)
-	if b.payload.Size+size > b.PayloadSizeMax {
+	if b.Payload.Size+size > b.PayloadSizeMax {
 		ret := b.Flush()
 
 		r := payload.NewRecord()
 		r.AddChunk(chunk)
-		b.payload.AddRecord(r)
+		b.Payload.AddRecord(r)
 
 		return ret
 	}
@@ -46,13 +46,13 @@ func (b *PayloadBuffer) AddChunk(chunk *chunk.Chunk) *payload.Payload {
 	// skip record aggregation
 	if size > b.RecordUnitSize {
 		var ret *payload.Payload = nil
-		if b.payload.Count+1 > b.RecordsPerPayloadMax {
+		if b.Payload.Count+1 > b.RecordsPerPayloadMax {
 			ret = b.Flush()
 		}
 
 		r := payload.NewRecord()
 		r.AddChunk(chunk)
-		b.payload.AddRecord(r)
+		b.Payload.AddRecord(r)
 
 		return ret
 	}
@@ -60,26 +60,26 @@ func (b *PayloadBuffer) AddChunk(chunk *chunk.Chunk) *payload.Payload {
 	// next record
 	if lastRecord.Size+size > b.RecordUnitSize {
 		var ret *payload.Payload = nil
-		if b.payload.Count+1 > b.RecordsPerPayloadMax {
+		if b.Payload.Count+1 > b.RecordsPerPayloadMax {
 			ret = b.Flush()
 		}
 
 		r := payload.NewRecord()
 		r.AddChunk(chunk)
-		b.payload.AddRecord(r)
+		b.Payload.AddRecord(r)
 
 		return ret
 	}
 
 	// add chunk
 	lastRecord.AddChunk(chunk)
-	b.payload.Size += size
+	b.Payload.Size += size
 
 	return nil
 }
 
 func (b *PayloadBuffer) Flush() *payload.Payload {
-	ret := *b.payload
-	b.payload = payload.NewPayload()
+	ret := *b.Payload
+	b.Payload = payload.NewPayload()
 	return &ret
 }

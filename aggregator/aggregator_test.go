@@ -19,11 +19,11 @@ func TestAggregatorRun(t *testing.T) {
 	buffer.RecordsPerPayloadMax = 3
 	buffer.PayloadSizeMax = 50
 	aggr := &Aggregator{
-		buffer:      buffer,
-		ChunkCh:     make(chan *chunk.Chunk),
-		PayloadCh:   make(chan *payload.Payload),
-		flushTicker: time.NewTicker(200 * time.Millisecond),
+		buffer:    buffer,
+		ChunkCh:   make(chan *chunk.Chunk),
+		PayloadCh: make(chan *payload.Payload),
 	}
+	aggr.FlushInterval = 200 * time.Millisecond
 
 	go aggr.Run()
 
