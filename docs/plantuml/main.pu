@@ -1,0 +1,20 @@
+@startuml main
+
+FileWatcher -> FileWatcher : find target file
+FileWatcher -> FileReader : start reader
+FileWatcher <-- FileReader
+FileWatcher -> FileReader : (channel) interval notify
+FileReader -->> FileWatcher
+FileReader -> FileReader : read file
+FileReader -> Aggregator : (channel) send chunks
+Aggregator -> Aggregator : aggregate chunks
+Aggregator --> FileReader
+Aggregator -> Sender : (channel) send payload
+Sender -> KinesisStreamsClient : records
+KinesisStreamsClient -> KinesisStreamsClient : PutRecords
+KinesisStreamsClient -> Sender: records
+Sender -> Sender : update state
+Sender --> Aggregator
+Aggregator --> FileReader
+
+@enduml

@@ -1,0 +1,10 @@
+[Unit]
+Description = kinesis-firehose-agent-go
+
+[Service]
+ExecStart=/var/log/kinesis-agent-go/kinesis-agent-go -c /var/log/kinesis-agent-go/config.yml
+PIDFile=/tmp/kinesis-firehose-agent-go.pid
+Restart=always
+
+[Install]
+WantedBy=default.target

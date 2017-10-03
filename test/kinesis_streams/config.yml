@@ -1,0 +1,39 @@
+# [required]
+ForwardType: kinesis_streams
+# [required]
+StreamName: itkq-kinesis-agent-test
+
+# [required] Intail unwatches files with mtime older than Now - LimitRecentryModified (seconds)
+# [default] 7 days (7 * 24 * 60 * 60)
+LimitRecentryModified: 60m
+
+# [required] pos_file path
+PosFilePath: /var/log/kinesis-agent-go/test.pos
+
+# [required] Watching file paths
+WatchFilePaths:
+  - /var/log/kinesis-agent-go/test.log
+
+# [optional] Forward-proxy url
+ForwardProxyUrl: 
+
+# [required] Watch and send interval in main loop
+RecordForwardInterval: 30s
+
+# [required] Interval trying to fetch new records in_tail watchers 
+InTailFetchInterval: 10s
+
+# [required] Monitor server address
+MonitorAddress:
+
+# [optional] failed records on PutRecordBatch() output to 
+# FailedRecordsLocalBackupPath: "/tmp/kinesis-agent-go/test_failed_records.log"
+
+# [required]
+MaxWorkerThread: 4
+
+# [required]
+RotateWait: 5s
+
+# [required] Output records which cannot send to kinesis because the blob is too big (highly recommended)
+UnputtableRecordsLocalBackupPath: "/var/log/kiensis-agent-go/unputtable.log"

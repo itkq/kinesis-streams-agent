@@ -1,0 +1,28 @@
+aggregator:
+  # [required]
+  flush_interval: 10s
+
+api:
+  # [required] api server address
+  address: localhost:24424
+
+sender:
+  type: local
+  output_filepath: /var/log/kinesis-agent-go/test_output
+
+state:
+  state_filepath: /var/log/kinesis-agent-go/test.state
+
+watcher:
+  # [required] watching paths
+  watch_paths: 
+    - /var/log/kinesis-agent-go/test.log
+
+  # [required] 
+  read_file_interval: 1s
+
+  # [optional] path to output records which cannot send to kinesis because the blob is too big (highly recommended)
+  unputtable_record_local_backup_path: /var/log/kinesis-agent-go/unputtable
+
+  # [required] 
+  lifetime_after_file_moved: 5s
