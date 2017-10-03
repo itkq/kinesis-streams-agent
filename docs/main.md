@@ -74,4 +74,4 @@ $ cat test.state
 
 ## Main flow
 
-![](https://github.com/itkq/kinesis-agent-go/raw/master/doc/plantuml/main.png)
+![](https://github.com/itkq/kinesis-agent-go/raw/master/docs/plantuml/main.png)
