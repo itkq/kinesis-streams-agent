@@ -1,7 +1,7 @@
 package api
 
 import (
-	"errors"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -24,46 +24,26 @@ func TestAPI(t *testing.T) {
 		metrics:  &HelloMetrics{},
 	}
 
-	errorstr := "error!"
-	errorExporter := &TestExporter{
-		endpoint: "/error",
-		metrics: &ErrorMetrics{
-			errorstr: errorstr,
-		},
-	}
-
 	api.Register(helloExporter)
-	api.Register(errorExporter)
 	go api.Run()
 
-	// test helloExporter
 	endpoint := fmt.Sprintf("http://%s%s", address, helloExporter.Endpoint())
 	resp, err := http.Get(endpoint)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 
 	data, err := ioutil.ReadAll(resp.Body)
-	b, _ := helloExporter.Export().ToJSON()
+	b, _ := json.Marshal(helloExporter.Export())
 	assert.Equal(t, nil, err)
 	assert.Equal(t, b, data)
-
-	// test errorExporter
-	endpoint = fmt.Sprintf("http://%s%s", address, errorExporter.Endpoint())
-	resp, err = http.Get(endpoint)
-	assert.Equal(t, nil, err)
-	assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-
-	data, err = ioutil.ReadAll(resp.Body)
-	assert.Equal(t, nil, err)
-	assert.Equal(t, data, []byte(fmt.Sprintf("{\"error\":\"%s\"}", errorstr)))
 }
 
 type TestExporter struct {
-	metrics  Metrics
+	metrics  interface{}
 	endpoint string
 }
 
-func (e *TestExporter) Export() Metrics {
+func (e *TestExporter) Export() interface{} {
 	return e.metrics
 }
 
@@ -72,15 +52,3 @@ func (e *TestExporter) Endpoint() string {
 }
 
 type HelloMetrics struct{}
-
-func (m *HelloMetrics) ToJSON() ([]byte, error) {
-	return []byte("hello"), nil
-}
-
-type ErrorMetrics struct {
-	errorstr string
-}
-
-func (m *ErrorMetrics) ToJSON() ([]byte, error) {
-	return []byte{}, errors.New(m.errorstr)
-}

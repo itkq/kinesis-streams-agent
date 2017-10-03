@@ -1,18 +1,15 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net"
 	"net/http"
 )
 
-type Metrics interface {
-	ToJSON() ([]byte, error)
-}
-
 type Exporter interface {
-	Export() Metrics
+	Export() interface{}
 	Endpoint() string
 }
 
@@ -54,7 +51,7 @@ func (m *API) Register(e Exporter) {
 
 func (m *API) Handler(e Exporter) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		b, err := e.Export().ToJSON()
+		b, err := json.Marshal(e.Export())
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(fmt.Sprintf("{\"error\":\"%s\"}", err.Error())))

@@ -1,9 +1,6 @@
 package aggregator
 
 import (
-	"encoding/json"
-
-	"github.com/itkq/kinesis-agent-go/api"
 	"github.com/itkq/kinesis-agent-go/payload"
 )
 
@@ -11,7 +8,7 @@ func (a *Aggregator) Endpoint() string {
 	return "/aggregator"
 }
 
-func (a *Aggregator) Export() api.Metrics {
+func (a *Aggregator) Export() interface{} {
 	return &AggregatorMetrics{
 		Payload: a.buffer.Payload,
 	}
@@ -19,8 +16,4 @@ func (a *Aggregator) Export() api.Metrics {
 
 type AggregatorMetrics struct {
 	Payload *payload.Payload `json:"payload"`
-}
-
-func (m *AggregatorMetrics) ToJSON() ([]byte, error) {
-	return json.Marshal(m)
 }
