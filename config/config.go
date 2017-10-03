@@ -34,9 +34,7 @@ type FileWatcherConfig struct {
 
 type SenderConfig struct {
 	ForwardProxyUrl string `yaml:"forward_proxy_url"`
-	OutputFilePath  string `yaml:"output_filepath"`
-	StreamName      string `yaml:"stream_name"`
-	Type            string `yaml:"type" validate:"required"`
+	StreamName      string `yaml:"stream_name" validate:"required"`
 }
 
 type StateConfig struct {

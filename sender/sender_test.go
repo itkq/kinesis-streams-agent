@@ -11,8 +11,8 @@ import (
 	"time"
 
 	"github.com/itkq/kinesis-agent-go/chunk"
-	"github.com/itkq/kinesis-agent-go/config"
 	"github.com/itkq/kinesis-agent-go/payload"
+	"github.com/itkq/kinesis-agent-go/sender/local"
 	"github.com/itkq/kinesis-agent-go/sender/retry"
 	"github.com/itkq/kinesis-agent-go/state"
 	"github.com/stretchr/testify/assert"
@@ -60,16 +60,12 @@ func TestRun(t *testing.T) {
 	defer os.RemoveAll(dir)
 
 	outputPath := filepath.Join(dir, "test_output")
-	conf := &config.SenderConfig{
-		Type:           "local",
-		OutputFilePath: outputPath,
-	}
-
-	sender, err := NewSender(conf, &state.DummyState{}, make(chan *payload.Payload))
+	client, err := local.NewLocalClient(outputPath)
 	if err != nil {
 		log.Println(err)
 		os.Exit(1)
 	}
+	sender := NewSender(client, &state.DummyState{}, make(chan *payload.Payload))
 
 	go sender.Run()
 

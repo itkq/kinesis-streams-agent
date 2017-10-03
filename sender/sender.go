@@ -1,18 +1,11 @@
 package sender
 
 import (
-	"errors"
 	"fmt"
 	"log"
-	"net/http"
-	"net/url"
 	"os"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/itkq/kinesis-agent-go/config"
 	"github.com/itkq/kinesis-agent-go/payload"
-	"github.com/itkq/kinesis-agent-go/sender/file_writer"
-	"github.com/itkq/kinesis-agent-go/sender/kinesis"
 	"github.com/itkq/kinesis-agent-go/sender/retry"
 	"github.com/itkq/kinesis-agent-go/state"
 )
@@ -36,55 +29,10 @@ type Sender struct {
 }
 
 func NewSender(
-	conf *config.SenderConfig,
+	sendClient SendClient,
 	state state.State,
 	payloadCh chan *payload.Payload,
-) (*Sender, error) {
-	var err error
-	var sendClient SendClient
-
-	switch conf.Type {
-	case "kinesis_streams":
-		if conf.StreamName == "" {
-			return nil, errors.New("stream_name must be set when kinesis_streams type")
-		}
-
-		awsConfig := aws.NewConfig()
-
-		// configure forward proxy
-		if conf.ForwardProxyUrl != "" {
-			httpClient := &http.Client{
-				Transport: &http.Transport{
-					Proxy: func(*http.Request) (*url.URL, error) {
-						return url.Parse(conf.ForwardProxyUrl)
-					},
-				},
-			}
-			awsConfig = awsConfig.WithHTTPClient(httpClient)
-			log.Println("info: configured forward proxy: ", conf.ForwardProxyUrl)
-		}
-
-		ks, err := kinesis.NewKinesisStream(awsConfig)
-		if err != nil {
-			return nil, err
-		}
-
-		sendClient = kinesis.NewKinesisStreamClient(ks, &conf.StreamName)
-
-	case "local":
-		if conf.OutputFilePath == "" {
-			return nil, errors.New("output_filepath must be set when local type")
-		}
-
-		sendClient, err = filewriter.NewFileWriter(conf.OutputFilePath)
-		if err != nil {
-			return nil, err
-		}
-
-	default:
-		return nil, errors.New("error: unknown type")
-	}
-
+) *Sender {
 	return &Sender{
 		client:        sendClient,
 		state:         state,
@@ -92,7 +40,7 @@ func NewSender(
 		backoff:       retry.NewExpBackOff(),
 		RetryCountMax: DefaultRetryCountMax,
 		retryRecords:  make([]*payload.Record, 0),
-	}, nil
+	}
 }
 
 func (s *Sender) Run() {

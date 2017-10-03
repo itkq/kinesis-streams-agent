@@ -1,4 +1,4 @@
-package filewriter
+package local
 
 import (
 	"io/ioutil"
@@ -23,7 +23,7 @@ func TestPutRecords(t *testing.T) {
 	defer os.RemoveAll(tmpDir)
 
 	outputPath := filepath.Join(tmpDir, "test_output")
-	writer, err := NewFileWriter(outputPath)
+	client, err := NewLocalClient(outputPath)
 	if err != nil {
 		log.Println("error:", err)
 		os.Exit(1)
@@ -66,7 +66,7 @@ func TestPutRecords(t *testing.T) {
 		},
 	}
 
-	responseRecords, err := writer.PutRecords(records)
+	responseRecords, err := client.PutRecords(records)
 	assert.NoError(t, err)
 	for _, r := range responseRecords {
 		assert.Nil(t, r.ErrorCode)

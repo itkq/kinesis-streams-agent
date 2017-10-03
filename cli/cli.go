@@ -4,16 +4,20 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net/http"
+	"net/url"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/aws/aws-sdk-go/aws"
 	"github.com/comail/colog"
 	"github.com/itkq/kinesis-agent-go/aggregator"
 	"github.com/itkq/kinesis-agent-go/api"
 	"github.com/itkq/kinesis-agent-go/config"
 	"github.com/itkq/kinesis-agent-go/file_watcher"
 	"github.com/itkq/kinesis-agent-go/sender"
+	"github.com/itkq/kinesis-agent-go/sender/kinesis"
 	"github.com/itkq/kinesis-agent-go/state"
 	"github.com/itkq/kinesis-agent-go/version"
 )
@@ -48,8 +52,6 @@ func StartCLI() int {
 		return 1
 	}
 
-	// TODO: debug option
-
 	var err error
 
 	conf, err := config.LoadConfig(configFile)
@@ -76,15 +78,28 @@ func StartCLI() int {
 		return 1
 	}
 
-	sender, err := sender.NewSender(
-		conf.SenderConfig,
-		state,
-		aggregator.PayloadCh,
-	)
+	awsConfig := aws.NewConfig()
+
+	// configure forward proxy
+	if conf.SenderConfig.ForwardProxyUrl != "" {
+		httpClient := &http.Client{
+			Transport: &http.Transport{
+				Proxy: func(*http.Request) (*url.URL, error) {
+					return url.Parse(conf.SenderConfig.ForwardProxyUrl)
+				},
+			},
+		}
+		awsConfig = awsConfig.WithHTTPClient(httpClient)
+		log.Println("info: configured forward proxy: ", conf.SenderConfig.ForwardProxyUrl)
+	}
+
+	ks, err := kinesis.NewKinesisStream(awsConfig)
 	if err != nil {
 		log.Println("error:", err)
-		return 1
+		os.Exit(1)
 	}
+	sendClient := kinesis.NewKinesisStreamClient(ks, &conf.SenderConfig.StreamName)
+	sender := sender.NewSender(sendClient, state, aggregator.PayloadCh)
 
 	api, err := api.NewAPI(conf.APIConfig.Address)
 	if err != nil {

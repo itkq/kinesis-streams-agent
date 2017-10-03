@@ -7,7 +7,6 @@ api:
   address: localhost:24424
 
 sender:
-  type: kinesis_streams
   stream_name: itkq-kinesis-agent-test
   forward_proxy_url: 
 
