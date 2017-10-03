@@ -1,9 +1,9 @@
 kinesis-agent-go
 ====
-Simple Amazon Kinesis Streams agent written in Go.
+Amazon Kinesis Streams agent written in Go.
 
 ## Description
-Collect logs based on `tail -F` and forward it to Amazon Kinesis Streams.
+Collect logs based on `tail -F` and send it to Amazon Kinesis Streams.
 
 ## Feature
 
@@ -14,10 +14,12 @@ implement tailing like
 Read position of each log is managed by a local file. 
 
 ### Aggregation
-To reduce cost, log entries are aggregated (line-based) as one payload, [up to 25 KB](https://aws.amazon.com/kinesis/streams/pricing/).
+To reduce cost, log entries are aggregated (line-based) as one record, [up to 25 KB](https://aws.amazon.com/kinesis/streams/pricing/).
 
-### Fail safe
-Read positions are updated only after logs are forwarded to Amazon Kinesis Streams successfully. If kinesis-agent-go has stopped unexpectedly, it forwards logs not sent yet when restarted.
+### At Lest Once
+Sent positions are updated immediately after logs are sent to Amazon Kinesis Streams using PutRecords API.
+Failed records are saved on-memory and retried to send by exponential backoff.
+If kinesis-agent-go has stopped unexpectedly, it send logs not sent yet when restarted.
 
 ## VS.
 
@@ -50,10 +52,7 @@ $ go get github.com/itkq/kinesis-agent-go
 7. Create new Pull Request
 
 ## TODO
-- improve sender's retry processing
-- remove too old state entry 
-- more tests
-  - add end-to-end test case
+- Add end-to-end test case
 
 ## Licence
 
