@@ -75,3 +75,11 @@ $ cat test.state
 ## Main flow
 
 ![](https://github.com/itkq/kinesis-agent-go/raw/master/docs/plantuml/main.png)
+
+## Rotation
+
+![](https://github.com/itkq/kinesis-agent-go/raw/master/docs/plantuml/rotation.png)
+
+## Send with retry
+
+![](https://github.com/itkq/kinesis-agent-go/raw/master/docs/plantuml/send_with_retry.png)

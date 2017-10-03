@@ -1,0 +1,14 @@
+@startuml send_with_retry
+
+Aggregator -> Sender : (channel) send payload
+Sender -> KinesisStreamsClient : records
+KinesisStreamsClient -> KinesisStreamsClient : PutRecords
+KinesisStreamsClient -> Sender: records
+Sender -> Sender : update state
+Sender -> KinesisStreamsClient : falied records
+KinesisStreamsClient -> KinesisStreamsClient : PutRecords
+KinesisStreamsClient -> Sender: records
+Sender -> Sender : update state
+Sender --> Aggregator
+
+@enduml

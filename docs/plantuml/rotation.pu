@@ -1,0 +1,35 @@
+@startuml rotation
+
+activate FileWatcher
+FileWatcher -> FileWatcher : find test.log
+activate FileReader1
+FileWatcher -> FileReader1 : start reader
+FileWatcher <-- FileReader1
+FileWatcher -> FileReader1 : (channel) interval notify
+FileReader1 -->> FileWatcher
+FileReader1 -> FileReader1 : read
+note left : mv test.log test.log.1 && touch test.log
+FileWatcher -> FileWatcher : find test.log
+activate FileReader2
+FileWatcher -> FileReader2 : start reader
+FileWatcher <-- FileReader2
+FileWatcher -> FileReader1 : (channel) interval notify
+FileReader1 -->> FileWatcher
+FileReader1 -> FileReader1 : read
+FileReader1 -> FileReader1: start lifetimer
+FileWatcher -> FileReader2 : (channel) interval notify
+FileReader2 -->> FileWatcher
+FileReader2 -> FileReader2 : read
+FileWatcher -> FileReader1 : (channel) interval notify
+FileReader1 -->> FileWatcher
+FileReader1 -> FileReader1: check lifetimer
+FileReader1 -> FileReader1: close
+deactivate FileReader1
+FileWatcher -> FileReader2 : (channel) interval notify
+FileReader2 -->> FileWatcher
+FileReader2 -> FileReader2 : read
+FileWatcher -> FileWatcher : deregister FileReader1
+FileWatcher -> FileReader2 : (channel) interval notify
+FileReader2 -> FileReader2 : read
+
+@enduml
