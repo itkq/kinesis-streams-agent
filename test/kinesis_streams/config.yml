@@ -8,11 +8,11 @@ StreamName: itkq-kinesis-agent-test
 LimitRecentryModified: 60m
 
 # [required] pos_file path
-PosFilePath: /var/log/kinesis-agent-go/test.pos
+PosFilePath: /var/log/kinesis-streams-agent/test.pos
 
 # [required] Watching file paths
 WatchFilePaths:
-  - /var/log/kinesis-agent-go/test.log
+  - /var/log/kinesis-streams-agent/test.log
 
 # [optional] Forward-proxy url
 ForwardProxyUrl: 
@@ -27,7 +27,7 @@ InTailFetchInterval: 10s
 MonitorAddress:
 
 # [optional] failed records on PutRecordBatch() output to 
-# FailedRecordsLocalBackupPath: "/tmp/kinesis-agent-go/test_failed_records.log"
+# FailedRecordsLocalBackupPath: "/tmp/kinesis-streams-agent/test_failed_records.log"
 
 # [required]
 MaxWorkerThread: 4

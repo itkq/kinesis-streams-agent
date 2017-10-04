@@ -2,7 +2,7 @@
 Description = kinesis-firehose-agent-go
 
 [Service]
-ExecStart=/var/log/kinesis-agent-go/kinesis-agent-go -c /var/log/kinesis-agent-go/config.yml
+ExecStart=/var/log/kinesis-streams-agent/kinesis-streams-agent -c /var/log/kinesis-streams-agent/config.yml
 PIDFile=/tmp/kinesis-firehose-agent-go.pid
 Restart=always
 

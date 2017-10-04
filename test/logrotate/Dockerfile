@@ -9,13 +9,13 @@ RUN curl https://packages.treasuredata.com/GPG-KEY-td-agent | apt-key add - \
     && apt update -qq && apt install -y td-agent
 
 
-ADD kinesis-agent-go.service /etc/systemd/system/
+ADD kinesis-streams-agent.service /etc/systemd/system/
 
-RUN mkdir -p /var/log/kinesis-agent-go
-WORKDIR /var/log/kinesis-agent-go/
+RUN mkdir -p /var/log/kinesis-streams-agent
+WORKDIR /var/log/kinesis-streams-agent/
 
 ADD config.yml ./
 ADD fluent.conf ./
 ADD logrotate.conf ./
 ADD run.rb ./
-ADD kinesis-agent-go ./
+ADD kinesis-streams-agent ./

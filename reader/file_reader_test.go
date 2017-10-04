@@ -11,10 +11,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/itkq/kinesis-agent-go/chunk"
-	file "github.com/itkq/kinesis-agent-go/reader/file_wrapper"
-	"github.com/itkq/kinesis-agent-go/reader/lifetimer"
-	"github.com/itkq/kinesis-agent-go/state"
+	"github.com/itkq/kinesis-streams-agent/chunk"
+	file "github.com/itkq/kinesis-streams-agent/reader/file_wrapper"
+	"github.com/itkq/kinesis-streams-agent/reader/lifetimer"
+	"github.com/itkq/kinesis-streams-agent/state"
 	"github.com/stretchr/testify/assert"
 )
 

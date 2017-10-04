@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-# system("systemctl start kinesis-agent-go")
+# system("systemctl start kinesis-streams-agent")
 sleep 1
 
-log = "/var/log/kinesis-agent-go/test.log"
+log = "/var/log/kinesis-streams-agent/test.log"
 
 system("touch #{log}")
 sleep 1
@@ -32,11 +32,11 @@ end
 t.join
 sleep 1
 
-# system("systemctl kill -s9 kinesis-agent-go")
+# system("systemctl kill -s9 kinesis-streams-agent")
 # sleep 1
 #
 # expected = `cat #{log}* | wc -l`.strip
-# actual = `wc -l /var/log/kinesis-agent-go/test_output`.strip
+# actual = `wc -l /var/log/kinesis-streams-agent/test_output`.strip
 #
 # if expected == actual
 #   exit(0)

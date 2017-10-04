@@ -3,7 +3,7 @@ package local
 import (
 	"os"
 
-	"github.com/itkq/kinesis-agent-go/payload"
+	"github.com/itkq/kinesis-streams-agent/payload"
 )
 
 type LocalClient struct {

@@ -1,7 +1,7 @@
 package sender
 
 import (
-	"github.com/itkq/kinesis-agent-go/payload"
+	"github.com/itkq/kinesis-streams-agent/payload"
 )
 
 func (s *Sender) Endpoint() string {

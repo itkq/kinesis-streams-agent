@@ -49,7 +49,7 @@ $ cat test.state
 {
     "8719120": {
         "pos": 14,
-        "path": "/tmp/kinesis-agent-go/test1.log",
+        "path": "/tmp/kinesis-streams-agent/test1.log",
         "send_ranges": [
             {
                 "begin": 0,
@@ -59,7 +59,7 @@ $ cat test.state
     },
     "8719122": {
         "pos": 52,
-        "path": "/tmp/kinesis-agent-go/test2.log",
+        "path": "/tmp/kinesis-streams-agent/test2.log",
         "send_ranges": [
             {
                 "begin": 0,
@@ -74,12 +74,12 @@ $ cat test.state
 
 ## Main flow
 
-![](https://github.com/itkq/kinesis-agent-go/raw/master/docs/plantuml/main.png)
+![](https://github.com/itkq/kinesis-streams-agent/raw/master/docs/plantuml/main.png)
 
 ## Rotation
 
-![](https://github.com/itkq/kinesis-agent-go/raw/master/docs/plantuml/rotation.png)
+![](https://github.com/itkq/kinesis-streams-agent/raw/master/docs/plantuml/rotation.png)
 
 ## Send with retry
 
-![](https://github.com/itkq/kinesis-agent-go/raw/master/docs/plantuml/send_with_retry.png)
+![](https://github.com/itkq/kinesis-streams-agent/raw/master/docs/plantuml/send_with_retry.png)

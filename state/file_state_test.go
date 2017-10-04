@@ -26,7 +26,7 @@ func TestLoadAndDumpFileState(t *testing.T) {
 	content := `
 {
 	"6406163": {
-		"path": "/tmp/kinesis-agent-go/test1.log",
+		"path": "/tmp/kinesis-streams-agent/test1.log",
 		"pos": 5119,
 		"send_ranges": [
 			{
@@ -36,7 +36,7 @@ func TestLoadAndDumpFileState(t *testing.T) {
 		]
 	},
 	"6421632": {
-		"path": "/tmp/kinesis-agent-go/test1.log",
+		"path": "/tmp/kinesis-streams-agent/test1.log",
 		"pos": 3071,
 		"send_ranges": [
 			{
@@ -50,7 +50,7 @@ func TestLoadAndDumpFileState(t *testing.T) {
 		]
 	},
 	"6414379": {
-		"path": "/tmp/kinesis-agent-go/test2.log",
+		"path": "/tmp/kinesis-streams-agent/test2.log",
 		"pos": 3071,
 		"send_ranges": [
 			{

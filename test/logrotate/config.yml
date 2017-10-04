@@ -8,21 +8,21 @@ api:
 
 sender:
   type: local
-  output_filepath: /var/log/kinesis-agent-go/test_output
+  output_filepath: /var/log/kinesis-streams-agent/test_output
 
 state:
-  state_filepath: /var/log/kinesis-agent-go/test.state
+  state_filepath: /var/log/kinesis-streams-agent/test.state
 
 watcher:
   # [required] watching paths
   watch_paths: 
-    - /var/log/kinesis-agent-go/test.log
+    - /var/log/kinesis-streams-agent/test.log
 
   # [required] 
   read_file_interval: 1s
 
   # [optional] path to output records which cannot send to kinesis because the blob is too big (highly recommended)
-  unputtable_record_local_backup_path: /var/log/kinesis-agent-go/unputtable
+  unputtable_record_local_backup_path: /var/log/kinesis-streams-agent/unputtable
 
   # [required] 
   lifetime_after_file_moved: 5s

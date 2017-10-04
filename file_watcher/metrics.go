@@ -1,7 +1,7 @@
 package filewatcher
 
 import (
-	"github.com/itkq/kinesis-agent-go/reader"
+	"github.com/itkq/kinesis-streams-agent/reader"
 )
 
 func (w *FileWatcher) Endpoint() string {

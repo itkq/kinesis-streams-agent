@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-log = "/var/log/kinesis-agent-go/test.log"
+log = "/var/log/kinesis-streams-agent/test.log"
 
 system("touch #{log}")
 sleep 1

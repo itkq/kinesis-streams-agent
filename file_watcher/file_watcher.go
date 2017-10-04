@@ -6,12 +6,12 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/itkq/kinesis-agent-go/chunk"
-	"github.com/itkq/kinesis-agent-go/config"
-	"github.com/itkq/kinesis-agent-go/file_watcher/fswatcher"
-	"github.com/itkq/kinesis-agent-go/reader"
-	"github.com/itkq/kinesis-agent-go/reader/lifetimer"
-	"github.com/itkq/kinesis-agent-go/state"
+	"github.com/itkq/kinesis-streams-agent/chunk"
+	"github.com/itkq/kinesis-streams-agent/config"
+	"github.com/itkq/kinesis-streams-agent/file_watcher/fswatcher"
+	"github.com/itkq/kinesis-streams-agent/reader"
+	"github.com/itkq/kinesis-streams-agent/reader/lifetimer"
+	"github.com/itkq/kinesis-streams-agent/state"
 )
 
 type FileWatcher struct {

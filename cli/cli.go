@@ -12,14 +12,14 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/comail/colog"
-	"github.com/itkq/kinesis-agent-go/aggregator"
-	"github.com/itkq/kinesis-agent-go/api"
-	"github.com/itkq/kinesis-agent-go/config"
-	"github.com/itkq/kinesis-agent-go/file_watcher"
-	"github.com/itkq/kinesis-agent-go/sender"
-	"github.com/itkq/kinesis-agent-go/sender/kinesis"
-	"github.com/itkq/kinesis-agent-go/state"
-	"github.com/itkq/kinesis-agent-go/version"
+	"github.com/itkq/kinesis-streams-agent/aggregator"
+	"github.com/itkq/kinesis-streams-agent/api"
+	"github.com/itkq/kinesis-streams-agent/config"
+	"github.com/itkq/kinesis-streams-agent/file_watcher"
+	"github.com/itkq/kinesis-streams-agent/sender"
+	"github.com/itkq/kinesis-streams-agent/sender/kinesis"
+	"github.com/itkq/kinesis-streams-agent/state"
+	"github.com/itkq/kinesis-streams-agent/version"
 )
 
 var (

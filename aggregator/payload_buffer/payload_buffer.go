@@ -1,9 +1,9 @@
 package payloadbuffer
 
 import (
-	"github.com/itkq/kinesis-agent-go/chunk"
-	"github.com/itkq/kinesis-agent-go/payload"
-	"github.com/itkq/kinesis-agent-go/sender/kinesis"
+	"github.com/itkq/kinesis-streams-agent/chunk"
+	"github.com/itkq/kinesis-streams-agent/payload"
+	"github.com/itkq/kinesis-streams-agent/sender/kinesis"
 )
 
 const (

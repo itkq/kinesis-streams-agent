@@ -11,19 +11,19 @@ sender:
   forward_proxy_url: 
 
 state:
-  state_filepath: /tmp/kinesis-agent-go/test.state
+  state_filepath: /tmp/kinesis-streams-agent/test.state
 
 watcher:
   # [required] watching paths
   watch_paths: 
-    - /tmp/kinesis-agent-go/test*.log
-    - /tmp/kinesis-agent-go/hoge.log
+    - /tmp/kinesis-streams-agent/test*.log
+    - /tmp/kinesis-streams-agent/hoge.log
 
   # [required] 
   read_file_interval: 5s
 
   # [optional] path to output records which cannot send to kinesis because the blob is too big (highly recommended)
-  unputtable_record_local_backup_path: "/tmp/kinesis-agent-go/unputtable"
+  unputtable_record_local_backup_path: "/tmp/kinesis-streams-agent/unputtable"
 
   # [required] 
   lifetime_after_file_moved: 5s

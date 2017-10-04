@@ -3,9 +3,9 @@ package sender
 import (
 	"testing"
 
-	"github.com/itkq/kinesis-agent-go/payload"
-	"github.com/itkq/kinesis-agent-go/sender/retry"
-	"github.com/itkq/kinesis-agent-go/state"
+	"github.com/itkq/kinesis-streams-agent/payload"
+	"github.com/itkq/kinesis-streams-agent/sender/retry"
+	"github.com/itkq/kinesis-streams-agent/state"
 	"github.com/stretchr/testify/assert"
 )
 

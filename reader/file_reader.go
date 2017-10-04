@@ -7,11 +7,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/itkq/kinesis-agent-go/chunk"
-	"github.com/itkq/kinesis-agent-go/reader/file_wrapper"
-	"github.com/itkq/kinesis-agent-go/reader/lifetimer"
-	"github.com/itkq/kinesis-agent-go/sender/kinesis"
-	"github.com/itkq/kinesis-agent-go/state"
+	"github.com/itkq/kinesis-streams-agent/chunk"
+	"github.com/itkq/kinesis-streams-agent/reader/file_wrapper"
+	"github.com/itkq/kinesis-streams-agent/reader/lifetimer"
+	"github.com/itkq/kinesis-streams-agent/sender/kinesis"
+	"github.com/itkq/kinesis-streams-agent/state"
 )
 
 const (

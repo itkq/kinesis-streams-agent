@@ -4,7 +4,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/kinesis"
-	"github.com/itkq/kinesis-agent-go/payload"
+	"github.com/itkq/kinesis-streams-agent/payload"
 	uuid "github.com/satori/go.uuid"
 )
 

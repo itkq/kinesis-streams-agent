@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go/service/kinesis"
-	"github.com/itkq/kinesis-agent-go/chunk"
-	"github.com/itkq/kinesis-agent-go/payload"
-	"github.com/itkq/kinesis-agent-go/state"
+	"github.com/itkq/kinesis-streams-agent/chunk"
+	"github.com/itkq/kinesis-streams-agent/payload"
+	"github.com/itkq/kinesis-streams-agent/state"
 	"github.com/stretchr/testify/assert"
 )
 

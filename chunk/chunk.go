@@ -1,7 +1,7 @@
 package chunk
 
 import (
-	"github.com/itkq/kinesis-agent-go/state"
+	"github.com/itkq/kinesis-streams-agent/state"
 )
 
 type Chunk struct {

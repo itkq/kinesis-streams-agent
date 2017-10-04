@@ -1,6 +1,6 @@
 package payload
 
-import "github.com/itkq/kinesis-agent-go/chunk"
+import "github.com/itkq/kinesis-streams-agent/chunk"
 
 type Record struct {
 	Size         int64

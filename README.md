@@ -1,8 +1,8 @@
-# kinesis-agent-go
+# kinesis-streams-agent
 
 Amazon Kinesis Streams agent written in Go.
 
-[![CircleCI](https://circleci.com/gh/itkq/kinesis-agent-go.svg?style=svg)](https://circleci.com/gh/itkq/kinesis-agent-go)
+[![CircleCI](https://circleci.com/gh/itkq/kinesis-streams-agent.svg?style=svg)](https://circleci.com/gh/itkq/kinesis-streams-agent)
 
 ## Description
 Collect logs based on `tail -F` and send it to Amazon Kinesis Streams.
@@ -21,7 +21,7 @@ To reduce cost, log entries are aggregated (line-based) as one record, [up to 25
 ### At Lest Once
 Sent positions are updated immediately after logs are sent to Amazon Kinesis Streams using PutRecords API.
 Failed records are saved on-memory and retried to send by exponential backoff.
-If kinesis-agent-go has stopped unexpectedly, it send logs not sent yet when restarted.
+If kinesis-streams-agent has stopped unexpectedly, it send logs not sent yet when restarted.
 
 ## VS.
 
@@ -35,17 +35,17 @@ Official agent but of course JVM is required.
 
 ## Usage
 ```
-$ kinesis-agent-go -c /path/to/config.yml
+$ kinesis-streams-agent -c /path/to/config.yml
 ```
 
 ## Install
 ```
-$ go get github.com/itkq/kinesis-agent-go
+$ go get github.com/itkq/kinesis-streams-agent
 ```
 
 ## Contribution
 
-1. Fork ([https://github.com/itkq/kinesis-agent-go/fork](https://github.com/itkq/kinesis-agent-go/fork))
+1. Fork ([https://github.com/itkq/kinesis-streams-agent/fork](https://github.com/itkq/kinesis-streams-agent/fork))
 2. Create a feature branch
 3. Commit your changes
 4. Rebase your local changes against the master branch

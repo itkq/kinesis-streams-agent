@@ -2,12 +2,12 @@
 
 set -eu
 
-img=kinesis-agent-go-logrotate
+img=kinesis-streams-agent-logrotate
 dir=$(pwd)
 
 echo -n 'go build ... '
 cd ../../ && GOOS=linux GOARCH=amd64 go build && cd "$dir"
-cp ../../kinesis-agent-go ./
+cp ../../kinesis-streams-agent ./
 echo 'finished.'
 
 docker build . -t "$img"
